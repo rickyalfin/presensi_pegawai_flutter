@@ -3,6 +3,7 @@ import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:presensi_pegawai_flutter/core/helper/dialog_helper.dart';
 
+//fuction untuk mengecek apakah permission sudah disetujui atau belum
 class LocationHelper {
   static Future<bool> isGrantedLocationPermission() async {
     LocationPermission permission;
@@ -15,6 +16,7 @@ class LocationHelper {
     }
   }
 
+  //function untuk mengecek apakah GPS sudah diaktifkan atau belum
   static Future<bool> isEnabledLocationService() async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     return serviceEnabled;
