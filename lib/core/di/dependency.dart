@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:dio/dio.dart';
+import 'package:presensi_pegawai_flutter/core/network/app_interceptor.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 final sl = GetIt.instance;
@@ -7,6 +8,7 @@ final sl = GetIt.instance;
 Future<void> initDependency() async {
   //dio
   Dio dio = Dio();
+  dio.interceptors.add(AppInterceptor());
   dio.interceptors.add(
     PrettyDioLogger(
       requestBody: true,
