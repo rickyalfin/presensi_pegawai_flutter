@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:presensi_pegawai_flutter/app/presentation/login/login_screen.dart';
 import 'package:presensi_pegawai_flutter/core/di/dependency.dart';
 import 'package:presensi_pegawai_flutter/core/widget/error_app_widget.dart';
 import 'package:presensi_pegawai_flutter/core/widget/loading_app_widget.dart';
@@ -17,20 +18,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: ErrorAppWidget(
-          description: "Error request API",
-          onPressDefaultButton: () {
-            print("refresh button on click");
-          },
-          alternatifButton: FilledButton(
-            child: Text("Print"),
-            onPressed: () {
-              print("Print Sekarang");
-            },
-          ),
-        ),
-      ),
+      theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.red),
+      home: Scaffold(body: LoginScreen()),
     );
   }
 }

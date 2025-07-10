@@ -44,7 +44,7 @@ abstract class AppWidget<T extends AppProvider, P1, P2>
     });
 
     return Scaffold(
-      appBar: _appBarBuild(context),
+      appBar: appBarBuild(context),
       body: (notifier.isLoading)
           ? LoadingAppWidget()
           : (notifier.errorMessage.isNotEmpty)
@@ -56,12 +56,12 @@ abstract class AppWidget<T extends AppProvider, P1, P2>
               },
               alternatifButton: _alternatifErrorButton,
             )
-          : _bodyBuild(context),
+          : bodyBuild(context),
     );
   }
 
   void checkVariableBeforeUi(BuildContext context);
   void checkVariableAfterUi(BuildContext context);
-  AppBar? _appBarBuild(BuildContext context) => null;
-  Widget _bodyBuild(BuildContext context);
+  AppBar? appBarBuild(BuildContext context) => null;
+  Widget bodyBuild(BuildContext context);
 }
