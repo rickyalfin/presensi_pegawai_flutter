@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:presensi_pegawai_flutter/app/presentation/home/home_screen.dart';
 import 'package:presensi_pegawai_flutter/app/presentation/login/login_notifier.dart';
 import 'package:presensi_pegawai_flutter/core/helper/global_helper.dart';
 import 'package:presensi_pegawai_flutter/core/widget/app_widget.dart';
@@ -54,7 +55,7 @@ class LoginScreen extends AppWidget<LoginNotifier, void, void> {
             Container(
               width: double.maxFinite,
               child: FilledButton(
-                onPressed: _onPressLogin,
+                onPressed: () => _onPressLogin(context),
                 child: Text("Login"),
               ),
             ),
@@ -64,7 +65,12 @@ class LoginScreen extends AppWidget<LoginNotifier, void, void> {
     );
   }
 
-  _onPressLogin() {}
+  _onPressLogin(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => HomeScreen()),
+    );
+  }
 
   @override
   void checkVariableAfterUi(BuildContext context) {
