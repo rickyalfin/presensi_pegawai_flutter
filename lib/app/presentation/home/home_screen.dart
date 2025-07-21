@@ -11,7 +11,13 @@ class HomeScreen extends AppWidget<HomeNotifier, void, void> {
   Widget bodyBuild(BuildContext context) {
     // Widget SafeArea digunakan untuk mengamankan tampilan konten supaya isi konten tidak bertabrakan dengan notifikasi di mobile
     return SafeArea(
-      child: Column(children: [_headerLayout(context), _todayLayout(context)]),
+      child: Column(
+        children: [
+          _headerLayout(context),
+          _todayLayout(context),
+          Expanded(child: _thisMonthLayout(context)),
+        ],
+      ),
     );
   }
 
@@ -146,6 +152,94 @@ class HomeScreen extends AppWidget<HomeNotifier, void, void> {
     );
   }
 
+  _thisMonthLayout(BuildContext context) {
+    return Container(
+      width: double.maxFinite,
+      margin: EdgeInsets.only(top: 10),
+      padding: EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        color: GlobalHelper.getColorSchema(context).primaryContainer,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Presensi Sebulan Terakhir',
+            style: GlobalHelper.getTextStyle(
+              context,
+              appTextStyle: AppTextStyle.TITLE_LARGE,
+            ),
+          ),
+          SizedBox(height: 5),
+          Container(
+            height: 1,
+            color: GlobalHelper.getColorSchema(context).primary,
+          ),
+          SizedBox(height: 2),
+          Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Center(
+                  child: Text(
+                    'Tgl',
+                    style: GlobalHelper.getTextStyle(
+                      context,
+                      appTextStyle: AppTextStyle.TITLE_SMALL,
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 2,
+                child: Center(
+                  child: Text(
+                    'Datang',
+                    style: GlobalHelper.getTextStyle(
+                      context,
+                      appTextStyle: AppTextStyle.TITLE_SMALL,
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 2,
+                child: Center(
+                  child: Text(
+                    'Pulang',
+                    style: GlobalHelper.getTextStyle(
+                      context,
+                      appTextStyle: AppTextStyle.TITLE_SMALL,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 2),
+          Container(
+            height: 2,
+            color: GlobalHelper.getColorSchema(context).primary,
+          ),
+          ListView.separated(
+            physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            separatorBuilder: (context, index) => Container(
+              margin: EdgeInsets.symmetric(vertical: 8.0),
+              height: 1,
+              color: GlobalHelper.getColorSchema(context).surface,
+            ),
+            itemCount: 5,
+            itemBuilder: (context, index) {
+              return _itemThisMonth(context);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
   _timeTodayLayout(BuildContext context, String label, String time) {
     return Expanded(
       child: Column(
@@ -167,6 +261,61 @@ class HomeScreen extends AppWidget<HomeNotifier, void, void> {
               context,
               appTextStyle: AppTextStyle.BODY_MEDIUM,
             )?.copyWith(color: GlobalHelper.getColorSchema(context).onPrimary),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _itemThisMonth(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 3),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: GlobalHelper.getColorSchema(context).primary,
+              ),
+              child: Text(
+                '21\nJuli',
+                style:
+                    GlobalHelper.getTextStyle(
+                      context,
+                      appTextStyle: AppTextStyle.LABEL_LARGE,
+                    )?.copyWith(
+                      color: GlobalHelper.getColorSchema(context).onPrimary,
+                    ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Center(
+              child: Text(
+                '07:55:00',
+                style: GlobalHelper.getTextStyle(
+                  context,
+                  appTextStyle: AppTextStyle.BODY_MEDIUM,
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Center(
+              child: Text(
+                '16:15:00',
+                style: GlobalHelper.getTextStyle(
+                  context,
+                  appTextStyle: AppTextStyle.BODY_MEDIUM,
+                ),
+              ),
+            ),
           ),
         ],
       ),
