@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:presensi_pegawai_flutter/app/presentation/home/home_notifier.dart';
+import 'package:presensi_pegawai_flutter/app/presentation/map/map_screen.dart';
 import 'package:presensi_pegawai_flutter/core/helper/date_time_helper.dart';
 import 'package:presensi_pegawai_flutter/core/helper/global_helper.dart';
 import 'package:presensi_pegawai_flutter/core/widget/app_widget.dart';
@@ -139,7 +140,7 @@ class HomeScreen extends AppWidget<HomeNotifier, void, void> {
           Container(
             width: double.maxFinite,
             child: FilledButton(
-              onPressed: () {},
+              onPressed: () => _onPressCreateAttendance(context),
               child: Text('Buat Kehadiran'),
               style: FilledButton.styleFrom(
                 backgroundColor: GlobalHelper.getColorSchema(context).onPrimary,
@@ -319,6 +320,13 @@ class HomeScreen extends AppWidget<HomeNotifier, void, void> {
           ),
         ],
       ),
+    );
+  }
+
+  _onPressCreateAttendance(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MapScreen()),
     );
   }
 
