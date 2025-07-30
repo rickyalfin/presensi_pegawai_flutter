@@ -30,4 +30,12 @@ class AttendanceRepositoryImpl extends AttendanceRepository {
       return attendanceModel.today;
     });
   }
+
+  @override
+  Future<DataState> sendAttendance(AttendanceParamEntity param) {
+    return handleResponse(
+      () => _attendanceApiService.sendAttendance(body: param.toJson()),
+      (json) => null,
+    );
+  }
 }

@@ -11,6 +11,11 @@ sealed class Attendance with _$Attendance {
     String? date,
   }) = AttendanceEntity;
 
+  factory Attendance.paramEntity({
+    required double latitude,
+    required double longitude,
+  }) = AttendanceParamEntity;
+
   factory Attendance.fromJson(Map<String, Object> json) =>
       _$AttendanceFromJson(json);
 }
