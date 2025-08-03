@@ -33,6 +33,7 @@ class LoginScreen extends AppWidget<LoginNotifier, void, void> {
             SizedBox(height: 20),
 
             TextField(
+              controller: notifier.emailController,
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.email),
                 label: Text('Email'),
@@ -43,10 +44,20 @@ class LoginScreen extends AppWidget<LoginNotifier, void, void> {
             SizedBox(height: 10),
 
             TextField(
+              controller: notifier.passwordController,
+              obscureText: !notifier.isShowPassword,
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.password),
                 label: Text('Password'),
                 border: OutlineInputBorder(),
+                suffixIcon: IconButton(
+                  onPressed: _showHidePassword,
+                  icon: Icon(
+                    (notifier.isShowPassword)
+                        ? Icons.visibility_off
+                        : Icons.visibility,
+                  ),
+                ),
               ),
             ),
 
@@ -65,16 +76,22 @@ class LoginScreen extends AppWidget<LoginNotifier, void, void> {
     );
   }
 
+  _showHidePassword() {
+    notifier.isShowPassword = !notifier.isShowPassword;
+  }
+
   _onPressLogin(BuildContext context) {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => HomeScreen()),
-    );
+    notifier.login();
   }
 
   @override
   void checkVariableAfterUi(BuildContext context) {
-    // TODO: implement checkVariableAfterUi
+    if (notifier.isLoged) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
+    }
   }
 
   @override
