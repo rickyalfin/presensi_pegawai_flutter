@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:presensi_pegawai_flutter/app/module/entity/attendance.dart';
 import 'package:presensi_pegawai_flutter/app/presentation/home/home_notifier.dart';
 import 'package:presensi_pegawai_flutter/app/presentation/map/map_screen.dart';
 import 'package:presensi_pegawai_flutter/core/helper/date_time_helper.dart';
@@ -132,8 +133,16 @@ class HomeScreen extends AppWidget<HomeNotifier, void, void> {
           SizedBox(height: 20),
           Row(
             children: [
-              _timeTodayLayout(context, 'Datang', '06:03:45'),
-              _timeTodayLayout(context, 'Pulang', '14:56:34'),
+              _timeTodayLayout(
+                context,
+                'Datang',
+                notifier.attendanceToday?.startTime ?? '-',
+              ),
+              _timeTodayLayout(
+                context,
+                'Pulang',
+                notifier.attendanceToday?.endTime ?? '-',
+              ),
             ],
           ),
           SizedBox(height: 20),
@@ -227,13 +236,19 @@ class HomeScreen extends AppWidget<HomeNotifier, void, void> {
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             separatorBuilder: (context, index) => Container(
-              margin: EdgeInsets.symmetric(vertical: 8.0),
+              margin: EdgeInsets.symmetric(vertical: 2),
               height: 1,
               color: GlobalHelper.getColorSchema(context).surface,
             ),
-            itemCount: 5,
+            itemCount: notifier.listAttendanceThisMonth.length,
             itemBuilder: (context, index) {
-              return _itemThisMonth(context);
+              final item =
+                  notifier.listAttendanceThisMonth[notifier
+                          .listAttendanceThisMonth
+                          .length -
+                      index -
+                      1];
+              return _itemThisMonth(context, item);
             },
           ),
         ],
@@ -268,7 +283,7 @@ class HomeScreen extends AppWidget<HomeNotifier, void, void> {
     );
   }
 
-  _itemThisMonth(BuildContext context) {
+  _itemThisMonth(BuildContext context, AttendanceEntity item) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 3),
       child: Row(
@@ -282,7 +297,10 @@ class HomeScreen extends AppWidget<HomeNotifier, void, void> {
                 color: GlobalHelper.getColorSchema(context).primary,
               ),
               child: Text(
-                '21\nJuli',
+                DateTimeHelper.formatDateTimeFromString(
+                  dateTimeString: item.date!,
+                  format: 'dd\nMMM',
+                ),
                 style:
                     GlobalHelper.getTextStyle(
                       context,
@@ -298,7 +316,7 @@ class HomeScreen extends AppWidget<HomeNotifier, void, void> {
             flex: 2,
             child: Center(
               child: Text(
-                '07:55:00',
+                item.startTime,
                 style: GlobalHelper.getTextStyle(
                   context,
                   appTextStyle: AppTextStyle.BODY_MEDIUM,
@@ -310,7 +328,7 @@ class HomeScreen extends AppWidget<HomeNotifier, void, void> {
             flex: 2,
             child: Center(
               child: Text(
-                '16:15:00',
+                item.endTime,
                 style: GlobalHelper.getTextStyle(
                   context,
                   appTextStyle: AppTextStyle.BODY_MEDIUM,
