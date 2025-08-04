@@ -9,12 +9,8 @@ part of 'schedule_api_service.dart';
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
 
 class _ScheduleApiService implements ScheduleApiService {
-  _ScheduleApiService(
-    this._dio, {
-    this.baseUrl,
-    this.errorLogger,
-  }) {
-    baseUrl ??= 'https://presensi.pegawai.com';
+  _ScheduleApiService(this._dio, {this.baseUrl, this.errorLogger}) {
+    baseUrl ??= 'http://localhost:8000/';
   }
 
   final Dio _dio;
@@ -29,22 +25,16 @@ class _ScheduleApiService implements ScheduleApiService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<HttpResponse<DataState<dynamic>>>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-    )
-        .compose(
-          _dio.options,
-          'api/get-schedule',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
+    final _options = _setStreamType<HttpResponse<DataState<dynamic>>>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'api/get-schedule',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late DataState<dynamic> _value;
     try {
@@ -70,10 +60,7 @@ class _ScheduleApiService implements ScheduleApiService {
     return requestOptions;
   }
 
-  String _combineBaseUrls(
-    String dioBaseUrl,
-    String? baseUrl,
-  ) {
+  String _combineBaseUrls(String dioBaseUrl, String? baseUrl) {
     if (baseUrl == null || baseUrl.trim().isEmpty) {
       return dioBaseUrl;
     }
