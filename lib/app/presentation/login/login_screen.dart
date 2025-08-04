@@ -7,6 +7,16 @@ import 'package:presensi_pegawai_flutter/core/widget/app_widget.dart';
 
 class LoginScreen extends AppWidget<LoginNotifier, void, void> {
   @override
+  void checkVariableAfterUi(BuildContext context) {
+    if (notifier.isLoged) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
+    }
+  }
+
+  @override
   Widget bodyBuild(BuildContext context) {
     // Widget SafeArea digunakan untuk mengamankan tampilan konten supaya isi konten tidak bertabrakan dengan notifikasi di mobile
     return SafeArea(
@@ -82,16 +92,6 @@ class LoginScreen extends AppWidget<LoginNotifier, void, void> {
 
   _onPressLogin(BuildContext context) {
     notifier.login();
-  }
-
-  @override
-  void checkVariableAfterUi(BuildContext context) {
-    if (notifier.isLoged) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
-      );
-    }
   }
 
   @override

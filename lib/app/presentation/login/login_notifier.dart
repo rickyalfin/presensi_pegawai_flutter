@@ -35,8 +35,8 @@ class LoginNotifier extends AppProvider {
 
   _checkAuth() async {
     showLoading();
-    final auth = await SharedPreferencesHelper.getString(PREF_AUTH);
-    if (auth?.isEmpty ?? false) _isLoged = true;
+    final String? auth = await SharedPreferencesHelper.getString(PREF_AUTH);
+    if (auth?.isNotEmpty ?? false) _isLoged = true;
     hideLoading();
   }
 
