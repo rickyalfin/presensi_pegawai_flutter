@@ -66,6 +66,6 @@ Future<void> initDependency() async {
   );
 
   sl.registerFactoryParam<MapNotifier, void, void>(
-    (param1, param2) => MapNotifier(),
+    (param1, param2) => MapNotifier(sl()),
   );
 }

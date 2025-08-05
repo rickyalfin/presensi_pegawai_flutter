@@ -27,7 +27,11 @@ class MapScreen extends AppWidget<MapNotifier, void, void> {
                   minZoomLevel: 10,
                 ),
               ),
-              onMapIsReady: (p0) {},
+              onMapIsReady: (p0) {
+                if (p0) {
+                  notifier.mapIsReady();
+                }
+              },
               mapIsLoading: LoadingAppWidget(),
             ),
           ),
@@ -58,7 +62,7 @@ class MapScreen extends AppWidget<MapNotifier, void, void> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Kantor',
+                            notifier.schedule.office.name,
                             style: GlobalHelper.getTextStyle(
                               context,
                               appTextStyle: AppTextStyle.TITLE_MEDIUM,
@@ -76,7 +80,7 @@ class MapScreen extends AppWidget<MapNotifier, void, void> {
                               ).primary,
                             ),
                             child: Text(
-                              'WFA',
+                              (notifier.schedule.isWfa) ? 'WFA' : 'WFO',
                               style:
                                   GlobalHelper.getTextStyle(
                                     context,
@@ -102,14 +106,14 @@ class MapScreen extends AppWidget<MapNotifier, void, void> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Siang',
+                            notifier.schedule.shift.name,
                             style: GlobalHelper.getTextStyle(
                               context,
                               appTextStyle: AppTextStyle.TITLE_MEDIUM,
                             ),
                           ),
                           Text(
-                            '14:00:00 - 22:00:00',
+                            '${notifier.schedule.shift.startTime} - ${notifier.schedule.shift.endTime}',
                             style: GlobalHelper.getTextStyle(
                               context,
                               appTextStyle: AppTextStyle.BODY_SMALL,
