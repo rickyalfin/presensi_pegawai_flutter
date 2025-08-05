@@ -59,7 +59,7 @@ class HomeScreen extends AppWidget<HomeNotifier, void, void> {
                         children: [
                           Icon(Icons.location_city),
                           SizedBox(width: 5),
-                          Text('Kantor'),
+                          Text(notifier.schedule.office.name),
                         ],
                       ),
                     ),
@@ -68,7 +68,7 @@ class HomeScreen extends AppWidget<HomeNotifier, void, void> {
                         children: [
                           Icon(Icons.access_time),
                           SizedBox(width: 5),
-                          Text('Siang'),
+                          Text(notifier.schedule.shift.name),
                         ],
                       ),
                     ),
@@ -125,7 +125,7 @@ class HomeScreen extends AppWidget<HomeNotifier, void, void> {
                   borderRadius: BorderRadius.circular(10),
                   color: GlobalHelper.getColorSchema(context).onPrimary,
                 ),
-                child: Text("WFA"),
+                child: Text((notifier.schedule.isWfa) ? 'WFA' : 'WFO'),
               ),
             ],
           ),
