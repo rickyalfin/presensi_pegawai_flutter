@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:presensi_pegawai_flutter/app/presentation/map/map_notifier.dart';
 import 'package:presensi_pegawai_flutter/core/helper/global_helper.dart';
+import 'package:presensi_pegawai_flutter/core/helper/location_helper.dart';
 import 'package:presensi_pegawai_flutter/core/widget/app_widget.dart';
 import 'package:presensi_pegawai_flutter/core/widget/loading_app_widget.dart';
 
@@ -150,6 +151,24 @@ class MapScreen extends AppWidget<MapNotifier, void, void> {
 
   @override
   void checkVariableBeforeUi(BuildContext context) {
-    // TODO: implement checkVariableBeforeUi
+    if (!notifier.isGrantedLocation) {
+      alternatifErrorButton = FilledButton(
+        onPressed: () async {
+          await LocationHelper.showDialogLocationPermission(context);
+          notifier.checkLocationPermission();
+        },
+        child: Text('Setujui'),
+      );
+    } else if (!notifier.isEnabledLocation) {
+      alternatifErrorButton = FilledButton(
+        onPressed: () async {
+          LocationHelper.openLocationSetting();
+          notifier.checkLocationService();
+        },
+        child: Text('Buka Pengaturan Lokasi'),
+      );
+    } else {
+      alternatifErrorButton = null;
+    }
   }
 }
